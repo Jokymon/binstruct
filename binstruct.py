@@ -15,11 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 class Field(object):
     def __init__(self, start, size):
         self.start = start
         self.size = size
 
+
+class NumericField(Field):
     def __get__(self, instance, owner):
         start = instance.start_offset + self.start
         values = instance.array[start:start+self.size]
@@ -44,34 +47,34 @@ class Field(object):
         instance.array[start:start+self.size] = powers[0:self.size]
 
 
-class Int8Field(Field):
+class Int8Field(NumericField):
     def __init__(self, start):
-        Field.__init__(self, start, 1)
+        NumericField.__init__(self, start, 1)
 
 
-class UInt8Field(Field):
+class UInt8Field(NumericField):
     def __init__(self, start):
-        Field.__init__(self, start, 1)
+        NumericField.__init__(self, start, 1)
 
 
-class Int16Field(Field):
+class Int16Field(NumericField):
     def __init__(self, start):
-        Field.__init__(self, start, 2)
+        NumericField.__init__(self, start, 2)
 
 
-class UInt16Field(Field):
+class UInt16Field(NumericField):
     def __init__(self, start):
-        Field.__init__(self, start, 2)
+        NumericField.__init__(self, start, 2)
 
 
-class Int32Field(Field):
+class Int32Field(NumericField):
     def __init__(self, start):
-        Field.__init__(self, start, 4)
+        NumericField.__init__(self, start, 4)
 
 
-class UInt32Field(Field):
+class UInt32Field(NumericField):
     def __init__(self, start):
-        Field.__init__(self, start, 4)
+        NumericField.__init__(self, start, 4)
 
 
 class StringField(Field):
