@@ -16,6 +16,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+def big_endian(original_class):
+    orig_init = original_class.__init__
+
+    def __init__(self, *args, **kwargs):
+        orig_init(self, *args, **kwargs)
+        self.endian = "big"
+
+    original_class.__init__ = __init__
+    return original_class
+
+
 class Field(object):
     def __init__(self, start, size):
         self.start = start
@@ -28,6 +39,8 @@ class NumericField(Field):
         values = instance.array[start:start+self.size]
         powers = range(len(values))
         powers = map(lambda x: 256**x, powers)
+        if instance.endian == "big":
+            powers = reversed(list(powers))
         summands = map(int.__mul__, values, powers)
         return sum(summands)
 
@@ -38,10 +51,13 @@ class NumericField(Field):
     def __set__(self, instance, value):
         self.validate_set_value(value)
         powers = []
-        while value != 0:
+        for i in range(self.size):
             powers.append(int(value % 256))
-            value /= 256
+            value //= 256
+        if instance.endian == "big":
+            powers = list(reversed(powers))
         powers.extend(self.size*[0])
+
         start = instance.start_offset + self.start
 
         instance.array[start:start+self.size] = powers[0:self.size]
@@ -154,6 +170,7 @@ class StructTemplate(ClassWithLength):
     def __init__(self, array, start_offset):
         self.array = array
         self.start_offset = start_offset
+        self.endian = "little"
 
     @classmethod
     def clslength(cls):
@@ -165,3 +182,6 @@ class StructTemplate(ClassWithLength):
 
     def __len__(self):
         return len(self.__class__)
+
+    def set_endianess(self, endianess):
+        self.endian = endianess

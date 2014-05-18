@@ -185,3 +185,61 @@ class TestStringfield:
         assert struct.s1 == 5*"\0"
         assert struct.s1[0] == "\0"
         assert struct.s2 == "\0"
+
+
+class TestLittleEndian:
+    def testGettingInts(self):
+        class StructureUnderTest(binstruct.StructTemplate):
+            int8 = binstruct.Int8Field(0)
+            uint8 = binstruct.UInt8Field(1)
+            int16 = binstruct.Int16Field(2)
+            uint16 = binstruct.UInt16Field(4)
+            int32 = binstruct.Int32Field(6)
+            uint32 = binstruct.UInt32Field(10)
+
+        array = list(range(20))
+        struct = StructureUnderTest(array, 1)
+
+        struct.set_endianess("big")
+
+        assert struct.int8 == 1
+        assert struct.uint8 == 2
+        assert struct.int16 == 772
+        assert struct.uint16 == 1286
+        assert struct.int32 == 117967114
+        assert struct.uint32 == 185339150
+
+    def testGettingIntsWithDecorator(self):
+        @binstruct.big_endian
+        class StructureUnderTest(binstruct.StructTemplate):
+            uint32 = binstruct.UInt32Field(0)
+
+        array = list(range(4))
+        struct = StructureUnderTest(array, 0)
+
+        assert struct.uint32 == 66051
+
+    def testSettingInts(self):
+        @binstruct.big_endian
+        class StructureUnderTest(binstruct.StructTemplate):
+            int16 = binstruct.Int16Field(0)
+            uint32 = binstruct.UInt32Field(2)
+
+        array = 6 * [0]
+        struct = StructureUnderTest(array, 0)
+        struct.int16 = 0x3218
+        struct.uint32 = 0x50a53710
+
+        assert array[0:2] == [0x32, 0x18]
+        assert array[2:6] == [0x50, 0xa5, 0x37, 0x10]
+
+    def testSettingSmallIntsWithBigEndian(self):
+        @binstruct.big_endian
+        class StructureUnderTest(binstruct.StructTemplate):
+            uint32 = binstruct.UInt32Field(0)
+
+        array = 4 * [0]
+        struct = StructureUnderTest(array, 0)
+        struct.uint32 = 0x1234
+
+        assert array[0:4] == [0, 0, 0x12, 0x34]
