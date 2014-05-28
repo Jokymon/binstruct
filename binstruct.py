@@ -17,6 +17,13 @@
 
 
 def big_endian(original_class):
+    """The big_endian function is a class decorator for classes derived from
+    :class:`.StructTemplate`. By default a StructTemplate class interpretes its
+    fields in little endian format. Using this decorator you change this
+    behavior.
+
+    :param original_class: The class you want to turn into a big endian
+                           structure."""
     orig_init = original_class.__init__
 
     def __init__(self, *args, **kwargs):
@@ -64,36 +71,43 @@ class NumericField(Field):
 
 
 class Int8Field(NumericField):
+    """A numeric field representing a signed integer of 8 bits."""
     def __init__(self, start):
         NumericField.__init__(self, start, 1)
 
 
 class UInt8Field(NumericField):
+    """A numeric field representing an unsigned integer of 8 bits."""
     def __init__(self, start):
         NumericField.__init__(self, start, 1)
 
 
 class Int16Field(NumericField):
+    """A numeric field representing a signed integer of 16 bits."""
     def __init__(self, start):
         NumericField.__init__(self, start, 2)
 
 
 class UInt16Field(NumericField):
+    """A numeric field representing an unsigned integer of 16 bits."""
     def __init__(self, start):
         NumericField.__init__(self, start, 2)
 
 
 class Int32Field(NumericField):
+    """A numeric field representing a signed integer of 32 bits."""
     def __init__(self, start):
         NumericField.__init__(self, start, 4)
 
 
 class UInt32Field(NumericField):
+    """A numeric field representing an unsigned integer of 32 bits."""
     def __init__(self, start):
         NumericField.__init__(self, start, 4)
 
 
 class StringField(Field):
+    """A field representing a Python string."""
     def __init__(self, start, length):
         Field.__init__(self, start, length)
 
@@ -135,6 +149,7 @@ class Subrange(object):
 
 
 class RawField(Field):
+    """A special field to access data in a raw byte-wise manner."""
     def __init__(self, start, size):
         self.start = start
         self.size = size
@@ -147,18 +162,6 @@ class RawField(Field):
         raise ValueError("Cannot set a raw type field directly")
 
 
-class NestedStructField(Field):
-    def __init__(self, start, nested_structure_type):
-        self.start = start
-        self.nested_structure_type = nested_structure_type
-
-    def __get__(self, instance, owner):
-        return self.nested_structure_type(instance.array, self.start)
-
-    def __set__(self, instance, value):
-        raise ValueError("Cannot set a nested structure")
-
-
 class ClassWithLengthMetaType(type):
     def __len__(self):
         return self.clslength()
@@ -167,6 +170,7 @@ ClassWithLength = ClassWithLengthMetaType('ClassWithLength', (object, ), {})
 
 
 class StructTemplate(ClassWithLength):
+    """The main class for defining field accessible structures."""
     def __init__(self, array, start_offset):
         self.array = array
         self.start_offset = start_offset
@@ -181,7 +185,25 @@ class StructTemplate(ClassWithLength):
         return len
 
     def __len__(self):
+        """Returns the length of this structure. """
         return len(self.__class__)
 
     def set_endianess(self, endianess):
+        """Switch the endianess of the defined structure.
+
+        :param endianess: A string giving the new endianess. "little" for
+                          little endian and "big" for big endian.
+        """
         self.endian = endianess
+
+
+class NestedStructField(Field):
+    def __init__(self, start, nested_structure_type):
+        self.start = start
+        self.nested_structure_type = nested_structure_type
+
+    def __get__(self, instance, owner):
+        return self.nested_structure_type(instance.array, self.start)
+
+    def __set__(self, instance, value):
+        raise ValueError("Cannot set a nested structure")

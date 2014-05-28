@@ -1,6 +1,6 @@
-=========
-binstruct
-=========
+==================
+BinStruct Tutorial
+==================
 
 The binstruct library allows you to access binary data using a predefined
 structure. The binary data can be provided in any form that allows an indexed
