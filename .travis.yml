@@ -8,4 +8,4 @@ install:
 
 script:
   - py.test --cov .
-  - make -f docs/Makefile html
+  - sh -c 'cd docs' && make html
