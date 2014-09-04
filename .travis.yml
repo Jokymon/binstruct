@@ -5,7 +5,10 @@ python:
 install:
   - pip install pytest-cov
   - pip install Sphinx
+  - pip install coveralls
 
 script:
   - py.test --cov .
   - sh -c 'cd docs && make html'
+after_success:
+  coveralls
