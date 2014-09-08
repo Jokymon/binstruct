@@ -10,6 +10,9 @@ install:
 
 script:
   - py.test --cov .
-  - sh -c 'cd docs && make html'
+  # According to http://jinja.pocoo.org/docs/dev/intro/ Jinja2 is only
+  # supported by Python >= 3.3 so don't build the documentation with Python 3.2;
+  # See also Jinja2 issue #223
+  - if [[ $TRAVIS_PYTHON_VERSION != '3.2' ]]; then sh -c 'cd docs && make html'; fi
 after_success:
   coveralls
