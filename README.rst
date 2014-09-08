@@ -8,6 +8,34 @@ access to single bytes. This could for example be an mmaped file. The data
 structure itself is defined in way similar to Django database table definitions
 by declaring a new class with its fields.
 
+.. image:: https://travis-ci.org/Jokymon/binstruct.svg?branch=master
+    :target: https://travis-ci.org/Jokymon/binstruct
+    :alt: Current build status
+
+.. image:: https://coveralls.io/repos/Jokymon/binstruct/badge.png?branch=master
+    :target: https://coveralls.io/r/Jokymon/binstruct?branch=master
+    :alt: Test coverage
+
+.. image:: https://pypip.in/version/binstruct/badge.svg
+    :target: https://pypi.python.org/pypi/binstruct/
+    :alt: PyPI version
+
+.. image:: https://pypip.in/py_versions/binstruct/badge.svg
+    :target: https://pypi.python.org/pypi/binstruct/
+    :alt: Supported Python versions
+
+.. image:: https://pypip.in/egg/binstruct/badge.svg
+    :target: https://pypi.python.org/pypi/binstruct/
+    :alt: Egg Status
+
+.. image:: https://pypip.in/wheel/binstruct/badge.svg
+    :target: https://pypi.python.org/pypi/binstruct/
+    :alt: Wheel Status
+
+.. image:: https://pypip.in/license/binstruct/badge.svg
+    :target: https://pypi.python.org/pypi/binstruct/
+    :alt: License
+
 Simple Example
 --------------
 
