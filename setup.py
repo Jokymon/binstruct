@@ -1,11 +1,10 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='binstruct',
-    packages=[''],
-    version='1.0.0a1',
+    version='1.0.0',
     description='Library for read/write access of binary data via structures',
-    long_description=open("README.txt", "r").read(),
+    long_description=open("README.rst", "r").read(),
     author='Silvan Wegmann',
     author_email='binstruct@narf.ch',
     url='https://github.com/Jokymon/binstruct',
