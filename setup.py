@@ -2,9 +2,10 @@ from setuptools import setup
 
 setup(
     name='binstruct',
-    version='1.0.0',
+    version='1.0.1',
     description='Library for read/write access of binary data via structures',
     long_description=open("README.rst", "r").read(),
+    py_modules=['binstruct'],
     author='Silvan Wegmann',
     author_email='binstruct@narf.ch',
     url='https://github.com/Jokymon/binstruct',
