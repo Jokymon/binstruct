@@ -6,7 +6,7 @@ python:
 install:
   - pip install pytest-cov
   - pip install Sphinx
-  - pip install coveralls
+  - pip install coveralls=3.7.1
 
 script:
   - py.test --cov .
