@@ -16,11 +16,11 @@ by declaring a new class with its fields.
     :target: https://coveralls.io/r/Jokymon/binstruct?branch=master
     :alt: Test coverage
 
-.. image:: https://pypip.in/version/binstruct/badge.svg
+.. image:: https://img.shields.io/pypi/v/binstruct.svg
     :target: https://pypi.python.org/pypi/binstruct/
     :alt: PyPI version
 
-.. image:: https://pypip.in/py_versions/binstruct/badge.svg
+.. image:: https://img.shields.io/pypi/pyversions/binstruct.svg
     :target: https://pypi.python.org/pypi/binstruct/
     :alt: Supported Python versions
 
@@ -28,11 +28,11 @@ by declaring a new class with its fields.
     :target: https://pypi.python.org/pypi/binstruct/
     :alt: Egg Status
 
-.. image:: https://pypip.in/wheel/binstruct/badge.svg
+.. image:: https://img.shields.io/pypi/wheel/binstruct.svg
     :target: https://pypi.python.org/pypi/binstruct/
     :alt: Wheel Status
 
-.. image:: https://pypip.in/license/binstruct/badge.svg
+.. image:: https://img.shields.io/pypi/l/binstruct.svg
     :target: https://pypi.python.org/pypi/binstruct/
     :alt: License
 
